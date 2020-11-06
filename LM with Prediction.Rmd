@@ -40,6 +40,8 @@ basicNN + geom_point() + geom_smooth(method=lm)
 ```{r}
 model.1=lm(SIMS~ARM,data=dataF)
 summary.lm(model.1)
+new=data.frame(ARM=88,GRIP=94)
+predict(model.1,new,interval="prediction")
 ```
 This is a linear model of SIMS based on ARM strength. The adjusted R-squared is 0.467.  
 
@@ -65,6 +67,25 @@ basicNN + geom_point() + geom_smooth(method=lm)
 ```{r}
 model.2=lm(SIMS~GRIP,data=dataF)
 summary.lm(model.2)
+predict(model.2,new,interval="prediction")
 ```
 
-This is a linear model of SIMS based on GRIP strength. The adjusted R-squared is 0.4094 which is less than the one for ARM strength.   
+This is a linear model of SIMS based on GRIP strength. The adjusted R-squared is 0.4094 which is less than the one for ARM strength, so the linear model based on GRIP is better than the one based on ARM.  
+
+## Model3  
+
+SIMS as a function of ARM and GRIP
+
+```{r}
+model.3 <- lm(SIMS~ARM + GRIP,data=dataF)
+summary.lm(model.3)
+predict(model.3,new,interval="prediction")
+``` 
+
+The adjusted R-squared for model3 is 0.5358, which is bigger than the one for GRIP. This means model 3 is better than the previous model for predicting SIMS.  
+  
+```{r}
+anova(model.1,model.3)
+```
+
+The p-value is 0.000004994 which is less than 0.05 so we reject the null hypothesis and conclude that model 3 is better than model 1. 
