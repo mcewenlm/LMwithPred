@@ -17,7 +17,7 @@ We are using a linear model to predict a simulated strength score based on arm s
 dataF <- read.csv(file="http://onlinestatbook.com/case_studies_rvls/physical_strength/data.txt",sep="",header=TRUE) 
 ```
 
-# Model1  
+## Model1  
   
   
 Scatterplot SIMS as a function of ARM  
@@ -43,6 +43,28 @@ summary.lm(model.1)
 ```
 This is a linear model of SIMS based on ARM strength. The adjusted R-squared is 0.467.  
 
+## Model2
 
+Scatterplot SIMS as a function of GRIP  
 
+```{r}
+plot(SIMS~GRIP,data=dataF)
+```
 
+##Now with ggplot - first select the basic data
+
+```{r}
+basicNN <- ggplot(dataF,aes(y=SIMS,x=GRIP))
+```
+
+##Now add in scatterplot
+
+```{r}
+basicNN + geom_point() + geom_smooth(method=lm)
+```
+```{r}
+model.2=lm(SIMS~GRIP,data=dataF)
+summary.lm(model.2)
+```
+
+This is a linear model of SIMS based on GRIP strength. The adjusted R-squared is 0.4094 which is less than the one for ARM strength.   
