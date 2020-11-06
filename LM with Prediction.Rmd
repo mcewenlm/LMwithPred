@@ -1,0 +1,48 @@
+---
+title: "LM with Prediction"
+author: "Lucille McEwen"
+date: "11/5/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(tidyverse)
+require(tigerstats)
+```
+  
+We are using a linear model to predict a simulated strength score based on arm strength and or grip strength.  
+  
+```{r}
+dataF <- read.csv(file="http://onlinestatbook.com/case_studies_rvls/physical_strength/data.txt",sep="",header=TRUE) 
+```
+
+# Model1  
+  
+  
+Scatterplot SIMS as a function of ARM  
+
+```{r}
+plot(SIMS~ARM,data=dataF)
+```
+
+##Now with ggplot - first select the basic data
+
+```{r}
+basicNN <- ggplot(dataF,aes(y=SIMS,x=ARM))
+```
+
+##Now add in scatterplot
+
+```{r}
+basicNN + geom_point() + geom_smooth(method=lm)
+```
+```{r}
+model.1=lm(SIMS~ARM,data=dataF)
+summary.lm(model.1)
+```
+This is a linear model of SIMS based on ARM strength. The adjusted R-squared is 0.467.  
+
+
+
+
